@@ -6,7 +6,7 @@ namespace DragToEquip.Implementation.Components;
 internal class ItemSlotBehaviour : HoverBehaviour
 {
     internal required bool IsAllyTooltip { get; set; }
-    private bool IsDragging => ItemObject.itemBeingDragged == null
+    private bool IsNotDragging => ItemObject.itemBeingDragged == null
         || ItemObject.itemBeingDragged.DragObject == null
         || ItemObject.itemBeingDragged.DragItemData == null
         || ItemObject.itemBeingDragged.DragItemData.Item == null;
@@ -24,7 +24,7 @@ internal class ItemSlotBehaviour : HoverBehaviour
         base.OnPointerExit(eventData);
         if (BattleSystem.instance == null) {
             this.StartDeferredCoroutine(() => {
-                if (CurrentSlot == null && IsDragging) {
+                if (CurrentSlot == null && IsNotDragging) {
                     SetEquipView(false);
                 }
             }, 0.6f);
